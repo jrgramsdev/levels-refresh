@@ -1,0 +1,109 @@
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
+      <span class="dot" aria-hidden="true"></span>
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: settings.logo_width | times: 2 }}"
+             alt="{{ settings.brand_name | default: shop.name | escape }}"
+             style="width:{{ settings.logo_width }}px;height:auto;"
+             width="{{ settings.logo_width }}"
+             height="32">
+      {%- else -%}
+        <span>{{ settings.brand_name | default: shop.name }}</span>
+      {%- endif -%}
+      {%- if settings.brand_tag != blank -%}
+        <span class="brand-tag">{{ settings.brand_tag }}</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="nav-primary" aria-label="Main">
+      {%- for link in section.settings.menu.links -%}
+        {%- if link.links.size > 0 -%}
+          <details>
+            <summary>{{ link.title }}</summary>
+            <div class="submenu">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}"{% if child.current %} class="is-active"{% endif %}>{{ child.title }}</a>
+              {%- endfor -%}
+            </div>
+          </details>
+        {%- else -%}
+          <a href="{{ link.url }}"{% if link.current %} class="is-active"{% endif %}>{{ link.title }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
+    <div class="header-tools">
+      <button class="icon-btn" type="button" data-search-open aria-label="Search">
+        {% render 'icon', icon: 'search' %}
+      </button>
+      <a class="icon-btn hide-mobile" href="{{ routes.account_url }}" aria-label="Account">
+        {% render 'icon', icon: 'user' %}
+      </a>
+      <button class="icon-btn" type="button" data-cart-open aria-label="Cart">
+        {% render 'icon', icon: 'cart' %}
+        <span class="cart-count" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
+      </button>
+      <button class="icon-btn show-mobile" type="button" data-mobile-open aria-label="Menu">
+        {% render 'icon', icon: 'menu' %}
+      </button>
+    </div>
+  </div>
+</header>
+
+<aside class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+  <div class="mobile-drawer-head">
+    <a class="brand" href="{{ routes.root_url }}">
+      <span class="dot"></span>
+      <span>{{ settings.brand_name | default: shop.name }}</span>
+    </a>
+    <button class="icon-btn" type="button" data-mobile-close aria-label="Close">
+      {% render 'icon', icon: 'close' %}
+    </button>
+  </div>
+  <nav aria-label="Mobile">
+    {%- for link in section.settings.menu.links -%}
+      {%- if link.links.size > 0 -%}
+        <details>
+          <summary>{{ link.title }}</summary>
+          <div class="submenu">
+            {%- for child in link.links -%}
+              <a href="{{ child.url }}">{{ child.title }}</a>
+            {%- endfor -%}
+          </div>
+        </details>
+      {%- else -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+    <a href="{{ routes.account_url }}">Account</a>
+    <a href="{{ routes.search_url }}">Search</a>
+  </nav>
+</aside>
+
+<div class="search-modal-overlay" id="search-modal-overlay" data-search-close></div>
+<div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-label="Search">
+  <form action="{{ routes.search_url }}" method="get" class="search-modal-form">
+    {% render 'icon', icon: 'search' %}
+    <input id="search-input" name="q" type="search" placeholder="Search products, brands, drops..." autocomplete="off" aria-label="Search">
+    <button type="button" class="icon-btn" data-search-close aria-label="Close">{% render 'icon', icon: 'close' %}</button>
+  </form>
+  <div class="search-modal-results" id="search-results"></div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

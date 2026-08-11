@@ -1,0 +1,31 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": {
+          "type": "links",
+          "settings": { "title": "Shop", "menu": "footer" }
+        },
+        "support": {
+          "type": "links",
+          "settings": { "title": "Support" }
+        },
+        "hours": {
+          "type": "text",
+          "settings": {
+            "title": "Hours",
+            "text": "<p>Mon–Sat · 10am–9pm<br>Sun · 11am–7pm</p>"
+          }
+        }
+      },
+      "block_order": ["shop", "support", "hours"],
+      "settings": {
+        "tagline": "Premium glass, hardware, and accessories. Curated drops, real-deal pricing."
+      }
+    }
+  },
+  "order": ["footer"]
+}

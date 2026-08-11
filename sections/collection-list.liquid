@@ -1,0 +1,68 @@
+<section class="section">
+  {%- if section.settings.label != blank or section.settings.title != blank -%}
+    <div class="section-head">
+      <div>
+        {%- if section.settings.label != blank -%}<div class="section-label">{{ section.settings.label }}</div>{%- endif -%}
+        {%- if section.settings.title != blank -%}<h2 class="section-title">{{ section.settings.title }}</h2>{%- endif -%}
+        {%- if section.settings.subtitle != blank -%}<p class="section-sub">{{ section.settings.subtitle }}</p>{%- endif -%}
+      </div>
+      {%- if section.settings.link_url != blank and section.settings.link_label != blank -%}
+        <a class="section-link" href="{{ section.settings.link_url }}">{{ section.settings.link_label }} →</a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="collection-tiles">
+    {%- for block in section.blocks -%}
+      {%- assign coll = block.settings.collection -%}
+      {%- assign image = block.settings.image | default: coll.image | default: coll.products.first.featured_image -%}
+      <a class="collection-tile reveal" href="{{ coll.url | default: '#' }}" {{ block.shopify_attributes }}>
+        {%- if image -%}
+          <img src="{{ image | image_url: width: 600 }}"
+               srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w"
+               sizes="(max-width: 640px) 50vw, 280px"
+               alt="{{ coll.title | escape }}"
+               loading="lazy"
+               width="600" height="600">
+        {%- endif -%}
+        <div class="collection-tile-content">
+          <h3>{{ block.settings.title | default: coll.title | default: 'Shop' }}</h3>
+          <span class="arrow" aria-hidden="true">{% render 'icon', icon: 'arrow-right' %}</span>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection list",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "label", "label": "Eyebrow", "default": "Shop categories" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Browse the floor." },
+    { "type": "textarea", "id": "subtitle", "label": "Subheading" },
+    { "type": "text", "id": "link_label", "label": "Link label" },
+    { "type": "url", "id": "link_url", "label": "Link URL" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Collection tile",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "title", "label": "Title override" },
+        { "type": "image_picker", "id": "image", "label": "Image override" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection list",
+      "blocks": [
+        { "type": "tile" }, { "type": "tile" }, { "type": "tile" }, { "type": "tile" }
+      ]
+    }
+  ]
+}
+{% endschema %}

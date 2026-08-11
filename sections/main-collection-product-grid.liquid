@@ -1,0 +1,40 @@
+{% paginate collection.products by section.settings.per_page %}
+  <div class="collection-toolbar">
+    <div class="count">{{ collection.products_count }} product{% if collection.products_count != 1 %}s{% endif %}</div>
+    <form method="get">
+      <label for="sort_by" style="margin-right:8px;">Sort:</label>
+      <select id="sort_by" name="sort_by" onchange="this.form.submit()">
+        {%- assign sorts = 'manual,best-selling,title-ascending,title-descending,price-ascending,price-descending,created-descending' | split: ',' -%}
+        {%- assign labels = 'Featured,Best selling,A–Z,Z–A,Price: low → high,Price: high → low,Newest' | split: ',' -%}
+        {%- for s in sorts -%}
+          <option value="{{ s }}" {% if collection.sort_by == s or collection.default_sort_by == s and collection.sort_by == blank %}selected{% endif %}>{{ labels[forloop.index0] }}</option>
+        {%- endfor -%}
+      </select>
+    </form>
+  </div>
+
+  <section class="collection-products">
+    {%- if collection.products.size > 0 -%}
+      <div class="product-grid">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+      {% render 'pagination', paginate: paginate %}
+    {%- else -%}
+      <div style="text-align:center;padding:80px 24px;color:var(--fg-dim);">
+        <h2 style="font-family:var(--font-display);font-size:24px;color:var(--fg);margin-bottom:8px;">No products yet.</h2>
+        <p>Check back soon — restocks every week.</p>
+      </div>
+    {%- endif -%}
+  </section>
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Product grid",
+  "settings": [
+    { "type": "range", "id": "per_page", "min": 12, "max": 48, "step": 4, "label": "Products per page", "default": 24 }
+  ]
+}
+{% endschema %}

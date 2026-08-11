@@ -1,0 +1,27 @@
+{
+  "current": {
+    "brand_name": "LEVELS",
+    "brand_tag": "smoke shop",
+    "color_bg": "#000000",
+    "color_fg": "#f5f5f7",
+    "color_signal": "#0f8f45",
+    "cart_drawer": true,
+    "cart_note": "Free shipping on orders over $50.",
+    "age_gate_enabled": true,
+    "social_instagram": "https://instagram.com/levelssmoke",
+    "logo_width": 130,
+    "sections": {},
+    "content_for_index": []
+  },
+  "presets": {
+    "Default": {
+      "brand_name": "LEVELS",
+      "brand_tag": "smoke shop",
+      "color_bg": "#000000",
+      "color_fg": "#f5f5f7",
+      "color_signal": "#0f8f45",
+      "cart_drawer": true,
+      "age_gate_enabled": true
+    }
+  }
+}

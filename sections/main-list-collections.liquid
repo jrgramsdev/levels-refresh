@@ -1,0 +1,27 @@
+<section class="collection-banner">
+  <h1>All collections</h1>
+  <p>Every category, all in one place.</p>
+</section>
+
+<section class="section" style="padding-top:24px;">
+  <div class="collection-tiles">
+    {%- for coll in collections -%}
+      {%- if coll.handle != 'frontpage' and coll.products_count > 0 -%}
+        <a class="collection-tile reveal" href="{{ coll.url }}">
+          {%- assign img = coll.image | default: coll.products.first.featured_image -%}
+          {%- if img -%}
+            <img src="{{ img | image_url: width: 600 }}" alt="{{ coll.title | escape }}" loading="lazy" width="600" height="600">
+          {%- endif -%}
+          <div class="collection-tile-content">
+            <h3>{{ coll.title }}</h3>
+            <span class="arrow">{% render 'icon', icon: 'arrow-right' %}</span>
+          </div>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "All collections" }
+{% endschema %}

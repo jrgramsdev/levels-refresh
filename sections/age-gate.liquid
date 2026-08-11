@@ -1,0 +1,20 @@
+{%- if settings.age_gate_enabled -%}
+  <div class="age-gate-overlay" id="age-gate" role="dialog" aria-modal="true" aria-label="Age verification">
+    <div class="age-gate">
+      <div class="brand" style="justify-content:center;margin-bottom:18px;">
+        <span class="dot"></span>
+        <span>{{ settings.brand_name | default: shop.name }}</span>
+      </div>
+      <h2>Are you 21 or older?</h2>
+      <p>By entering this site you certify that you are of legal age in your jurisdiction to view tobacco accessories. All products are intended for legal use only.</p>
+      <div class="age-gate-actions">
+        <button type="button" class="btn" data-age-no>No</button>
+        <button type="button" class="btn btn-primary" data-age-yes>Yes, I'm 21+</button>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{ "name": "Age gate", "enabled_on": { "templates": ["*"] } }
+{% endschema %}

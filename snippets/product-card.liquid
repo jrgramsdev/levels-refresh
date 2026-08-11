@@ -1,0 +1,52 @@
+{%- comment -%}
+  Renders a product card.
+  Accepts: product (required), show_vendor (optional bool, default true)
+{%- endcomment -%}
+
+{%- liquid
+  assign show_vendor = show_vendor | default: true
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+  assign first_image = product.featured_media
+  assign second_image = product.media[1]
+-%}
+
+<a class="product-card reveal" href="{{ product.url }}">
+  <div class="product-card-media">
+    <div class="product-card-badges">
+      {%- if on_sale -%}<span class="badge badge-sale">Sale</span>{%- endif -%}
+      {%- if product.tags contains 'new' or product.tags contains 'New' -%}<span class="badge badge-new">New</span>{%- endif -%}
+      {%- unless product.available -%}<span class="badge badge-soldout">Sold out</span>{%- endunless -%}
+    </div>
+    {%- if first_image -%}
+      <img src="{{ first_image | image_url: width: 600 }}"
+           srcset="{{ first_image | image_url: width: 360 }} 360w, {{ first_image | image_url: width: 600 }} 600w, {{ first_image | image_url: width: 900 }} 900w"
+           sizes="(max-width: 640px) 50vw, 280px"
+           alt="{{ product.title | escape }}"
+           loading="lazy"
+           width="600"
+           height="600">
+      {%- if second_image -%}
+        <img class="secondary-img"
+             src="{{ second_image | image_url: width: 600 }}"
+             alt=""
+             loading="lazy"
+             width="600"
+             height="600">
+      {%- endif -%}
+    {%- else -%}
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--fg-faint);font-size:12px;">No image</div>
+    {%- endif -%}
+  </div>
+  <div class="product-card-body">
+    {%- if show_vendor and product.vendor != blank -%}
+      <div class="product-card-vendor">{{ product.vendor }}</div>
+    {%- endif -%}
+    <div class="product-card-title">{{ product.title }}</div>
+    <div class="product-card-price">
+      {% render 'price', product: product %}
+    </div>
+  </div>
+</a>

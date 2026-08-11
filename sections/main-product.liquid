@@ -1,0 +1,106 @@
+<section class="product-layout">
+  <div class="product-gallery">
+    <div class="product-gallery-main" id="product-gallery-main">
+      {%- if product.featured_media -%}
+        <img src="{{ product.featured_media | image_url: width: 1200 }}"
+             srcset="{{ product.featured_media | image_url: width: 600 }} 600w, {{ product.featured_media | image_url: width: 900 }} 900w, {{ product.featured_media | image_url: width: 1200 }} 1200w"
+             sizes="(max-width: 900px) 100vw, 700px"
+             alt="{{ product.title | escape }}"
+             width="1200" height="1200"
+             fetchpriority="high">
+      {%- endif -%}
+    </div>
+    {%- if product.media.size > 1 -%}
+      <div class="product-gallery-thumbs">
+        {%- for media in product.media limit: 8 -%}
+          <button type="button" class="product-gallery-thumb {% if forloop.first %}is-active{% endif %}" data-src="{{ media | image_url: width: 1200 }}" aria-label="View image {{ forloop.index }}">
+            <img src="{{ media | image_url: width: 200 }}" alt="" loading="lazy" width="200" height="200">
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="product-info">
+    {%- if product.vendor != blank -%}<div class="product-vendor">{{ product.vendor }}</div>{%- endif -%}
+    <h1 class="product-title">{{ product.title }}</h1>
+
+    <div class="product-price-row">
+      <span class="price" data-product-price>{{ product.selected_or_first_available_variant.price | money }}</span>
+      <span class="price-compare" data-product-compare {% if product.selected_or_first_available_variant.compare_at_price <= product.selected_or_first_available_variant.price %}style="display:none"{% endif %}>{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+    </div>
+
+    <form id="product-form" action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" novalidate>
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+      {%- if product.has_only_default_variant == false -%}
+        <div class="product-options">
+          {%- for option in product.options_with_values -%}
+            <div class="product-option-group">
+              <label>{{ option.name }}</label>
+              <div class="product-option-values">
+                {%- for value in option.values -%}
+                  {%- assign opt_id = 'option-' | append: forloop.parentloop.index | append: '-' | append: forloop.index -%}
+                  <input type="radio" id="{{ opt_id }}" name="option-{{ forloop.parentloop.index }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
+                  <label class="opt-pill" for="{{ opt_id }}">{{ value }}</label>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="product-buy-row">
+        <div class="product-quantity">
+          <button type="button" data-qty="dec" aria-label="Decrease quantity">−</button>
+          <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="Quantity">
+          <button type="button" data-qty="inc" aria-label="Increase quantity">+</button>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="flex:1;justify-content:center;" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+          {%- if product.selected_or_first_available_variant.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+        </button>
+      </div>
+
+      <script id="product-variants-json" type="application/json">{{ product.variants | json }}</script>
+    </form>
+
+    <div class="product-meta">
+      {%- if product.sku != blank -%}<div><strong>SKU:</strong> {{ product.sku }}</div>{%- endif -%}
+      {%- if product.type != blank -%}<div><strong>Category:</strong> {{ product.type }}</div>{%- endif -%}
+      {%- if product.tags.size > 0 -%}
+        <div><strong>Tags:</strong> {{ product.tags | join: ' · ' }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if product.description != blank -%}
+      <div class="product-description">
+        {{ product.description }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if recommendations.products_count > 0 or section.settings.show_recs -%}
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-label">You may also like</div>
+        <h2 class="section-title" style="font-size:32px;">More from {{ product.vendor | default: shop.name }}</h2>
+      </div>
+    </div>
+    <div class="product-grid product-grid-tight">
+      {%- for p in recommendations.products limit: 4 -%}
+        {% render 'product-card', product: p %}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "checkbox", "id": "show_recs", "label": "Show product recommendations", "default": true }
+  ]
+}
+{% endschema %}

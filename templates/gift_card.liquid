@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ shop.name }} · Gift card</title>
+  <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+  {{ content_for_header }}
+</head>
+<body class="template-gift_card">
+  <main style="max-width:540px;margin:0 auto;padding:64px 24px;text-align:center;">
+    <div class="brand" style="justify-content:center;font-size:22px;margin-bottom:24px;">
+      <span class="dot"></span><span>{{ shop.name }}</span>
+    </div>
+    <h1 style="font-family:var(--font-display);font-size:36px;font-weight:700;letter-spacing:-.025em;margin-bottom:8px;">{{ gift_card.balance | money }}</h1>
+    <p style="color:var(--fg-dim);margin-bottom:32px;font-size:14px;">Gift card balance</p>
+
+    <div style="background:var(--bg-2);border:1px solid var(--fg-line);border-radius:18px;padding:32px 24px;margin-bottom:24px;">
+      {%- if gift_card.qr_identifier -%}
+        {{ gift_card | gift_card_qr_tag: 220 }}
+      {%- endif -%}
+      <div style="font-family:var(--font-mono);font-size:18px;letter-spacing:.04em;color:var(--fg);margin-top:16px;word-break:break-all;">
+        {{ gift_card.code | format_code }}
+      </div>
+    </div>
+
+    {%- if gift_card.expired -%}
+      <p style="color:var(--danger);font-size:13px;">This gift card has expired.</p>
+    {%- endif -%}
+
+    <a class="btn btn-primary btn-lg" href="{{ shop.url }}" style="margin-top:16px;">Shop now</a>
+
+    <button type="button" onclick="window.print()" style="display:block;margin:24px auto 0;color:var(--fg-dim);font-size:13px;text-decoration:underline;background:none;border:0;cursor:pointer;">Print this card</button>
+  </main>
+</body>
+</html>

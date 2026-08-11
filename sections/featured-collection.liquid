@@ -1,0 +1,44 @@
+<section class="section">
+  {%- assign coll = collections[section.settings.collection] -%}
+  <div class="section-head">
+    <div>
+      {%- if section.settings.label != blank -%}<div class="section-label">{{ section.settings.label }}</div>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title | default: coll.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="section-sub">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+    {%- if coll.url -%}
+      <a class="section-link" href="{{ coll.url }}">View all →</a>
+    {%- endif -%}
+  </div>
+
+  {%- assign limit = section.settings.product_count | default: 8 -%}
+  <div class="product-grid">
+    {%- for product in coll.products limit: limit -%}
+      {% render 'product-card', product: product %}
+    {%- else -%}
+      {%- for i in (1..4) -%}
+        <div class="product-card reveal">
+          <div class="product-card-media" style="background:var(--bg-3);"></div>
+          <div class="product-card-body">
+            <div class="product-card-title">Product example</div>
+            <div class="product-card-price"><span class="price">$0.00</span></div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Eyebrow", "default": "Most-viewed" },
+    { "type": "text", "id": "title", "label": "Heading override" },
+    { "type": "textarea", "id": "subtitle", "label": "Subheading" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "product_count", "min": 4, "max": 16, "step": 2, "label": "Products to show", "default": 8 }
+  ],
+  "presets": [{ "name": "Featured collection" }]
+}
+{% endschema %}

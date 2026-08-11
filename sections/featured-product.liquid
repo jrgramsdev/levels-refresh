@@ -1,0 +1,50 @@
+<section class="section">
+  {%- assign p = all_products[section.settings.product] -%}
+  <div class="featured-product">
+    <div class="featured-product-media reveal">
+      {%- if p.featured_media -%}
+        <img src="{{ p.featured_media | image_url: width: 1100 }}"
+             srcset="{{ p.featured_media | image_url: width: 600 }} 600w, {{ p.featured_media | image_url: width: 900 }} 900w, {{ p.featured_media | image_url: width: 1100 }} 1100w"
+             sizes="(max-width: 900px) 100vw, 540px"
+             alt="{{ p.title | escape }}"
+             loading="lazy"
+             width="1100" height="1100">
+      {%- elsif section.settings.fallback_image != blank -%}
+        <img src="{{ section.settings.fallback_image | image_url: width: 1100 }}" alt="" loading="lazy">
+      {%- endif -%}
+    </div>
+    <div class="featured-product-body reveal">
+      {%- if section.settings.label != blank -%}<div class="section-label" style="margin-bottom:14px;">{{ section.settings.label }}</div>{%- endif -%}
+      <h2>{{ section.settings.title | default: p.title }}</h2>
+      <p>{{ section.settings.description | default: p.description | strip_html | truncate: 240 }}</p>
+      {%- if p -%}
+        <div class="product-price-row">
+          {% render 'price', product: p %}
+        </div>
+      {%- endif -%}
+      <div class="featured-product-actions">
+        {%- if p -%}
+          <a class="btn btn-primary btn-lg" href="{{ p.url }}">Shop now {% render 'icon', icon: 'arrow-right' %}</a>
+        {%- elsif section.settings.cta_url != blank -%}
+          <a class="btn btn-primary btn-lg" href="{{ section.settings.cta_url }}">{{ section.settings.cta_label | default: 'Shop now' }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured product",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Eyebrow", "default": "In stock now" },
+    { "type": "text", "id": "title", "label": "Heading override" },
+    { "type": "textarea", "id": "description", "label": "Description override" },
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "image_picker", "id": "fallback_image", "label": "Fallback image" },
+    { "type": "text", "id": "cta_label", "label": "CTA (when no product)" },
+    { "type": "url", "id": "cta_url", "label": "CTA URL" }
+  ],
+  "presets": [{ "name": "Featured product" }]
+}
+{% endschema %}

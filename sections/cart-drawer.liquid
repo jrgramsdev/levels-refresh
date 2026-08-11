@@ -1,0 +1,50 @@
+<div class="cart-drawer-overlay" id="cart-drawer-overlay"></div>
+<aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-label="Cart">
+  <div class="cart-drawer-head">
+    <h2>Your cart <span data-cart-count style="color:var(--fg-dim);font-size:14px;font-weight:500;margin-left:8px;">{{ cart.item_count }}</span></h2>
+    <button class="icon-btn" type="button" data-cart-close aria-label="Close">
+      {% render 'icon', icon: 'close' %}
+    </button>
+  </div>
+
+  <div class="cart-drawer-body" id="cart-drawer-body">
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-empty"><p>Your cart is empty.</p></div>
+    {%- else -%}
+      {%- for item in cart.items -%}
+        <div class="cart-line" data-line-key="{{ item.key }}">
+          <a class="cart-line-media" href="{{ item.url }}">
+            {%- if item.image -%}<img src="{{ item.image | image_url: width: 144 }}" alt="{{ item.product.title | escape }}" loading="lazy">{%- endif -%}
+          </a>
+          <div>
+            <a class="cart-line-title" href="{{ item.url }}">{{ item.product.title }}</a>
+            {%- unless item.variant.title contains 'Default' -%}<div class="cart-line-variant">{{ item.variant.title }}</div>{%- endunless -%}
+            <div class="cart-line-qty">
+              <button type="button" data-qty="dec">−</button>
+              <input type="text" inputmode="numeric" pattern="[0-9]*" value="{{ item.quantity }}" data-qty-input>
+              <button type="button" data-qty="inc">+</button>
+            </div>
+          </div>
+          <div class="cart-line-price">{{ item.final_line_price | money }}</div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  <div class="cart-drawer-foot" id="cart-drawer-foot"{% if cart.item_count == 0 %} style="display:none"{% endif %}>
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span class="price" data-cart-subtotal>{{ cart.items_subtotal_price | money }}</span>
+    </div>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button class="btn btn-primary btn-block btn-lg" type="submit" name="checkout">
+        Check out
+      </button>
+    </form>
+    <div class="cart-foot-note">Shipping, taxes, and discounts calculated at checkout.</div>
+  </div>
+</aside>
+
+{% schema %}
+{ "name": "Cart drawer", "enabled_on": { "templates": ["*"] } }
+{% endschema %}

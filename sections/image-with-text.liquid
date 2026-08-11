@@ -1,0 +1,38 @@
+<section class="section">
+  <div class="image-with-text {% if section.settings.flip %}flip{% endif %}">
+    <div class="image-with-text-media reveal">
+      {%- if section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 1100 }}"
+             srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 1100 }} 1100w"
+             sizes="(max-width: 900px) 100vw, 540px"
+             alt="{{ section.settings.title | escape }}"
+             loading="lazy"
+             width="1100" height="880">
+      {%- endif -%}
+    </div>
+    <div class="image-with-text-body reveal">
+      {%- if section.settings.label != blank -%}<div class="section-label" style="margin-bottom:14px;">{{ section.settings.label }}</div>{%- endif -%}
+      <h2>{{ section.settings.title }}</h2>
+      <div>{{ section.settings.body }}</div>
+      {%- if section.settings.cta_label != blank -%}
+        <a class="btn" href="{{ section.settings.cta_url | default: '#' }}">{{ section.settings.cta_label }} →</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image with text",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "checkbox", "id": "flip", "label": "Image on right", "default": false },
+    { "type": "text", "id": "label", "label": "Eyebrow" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "About Levels." },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Family-owned. Curated stock. We carry the brands actual collectors know — Sovereignty, Puffco, top-shelf marble artists — at fair pricing. Walk in, get a real recommendation, leave with the right piece.</p>" },
+    { "type": "text", "id": "cta_label", "label": "CTA label" },
+    { "type": "url", "id": "cta_url", "label": "CTA URL" }
+  ],
+  "presets": [{ "name": "Image with text" }]
+}
+{% endschema %}

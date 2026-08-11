@@ -1,0 +1,50 @@
+<section class="hero" {% if section.settings.image != blank %}style="padding-bottom:40px;"{% endif %}>
+  <div class="hero-inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="hero-eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1>{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="hero-sub">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+    <div class="hero-actions">
+      {%- if section.settings.cta_label != blank -%}
+        <a class="btn btn-primary btn-lg" href="{{ section.settings.cta_url | default: '#' }}">{{ section.settings.cta_label }} {% render 'icon', icon: 'arrow-right' %}</a>
+      {%- endif -%}
+      {%- if section.settings.cta2_label != blank -%}
+        <a class="btn btn-lg" href="{{ section.settings.cta2_url | default: '#' }}">{{ section.settings.cta2_label }}</a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.image != blank -%}
+      <div class="hero-media">
+        <img src="{{ section.settings.image | image_url: width: 1800 }}"
+             srcset="{{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1400 }} 1400w, {{ section.settings.image | image_url: width: 1800 }} 1800w"
+             sizes="(max-width: 1100px) 100vw, 1100px"
+             alt="{{ section.settings.heading | escape }}"
+             width="1800"
+             height="772"
+             fetchpriority="high">
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New drop" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Premium glass. Real-deal pricing." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Sovereignty, Puffco, Marbles, Pendants — curated drops every week. Shop the entire collection." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Shop the drop" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary CTA" },
+    { "type": "url", "id": "cta2_url", "label": "Secondary CTA link" },
+    { "type": "image_picker", "id": "image", "label": "Hero image (21:9 recommended)" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  {% render 'meta-tags' %}
+
+  <title>
+    {{ page_title }}{% if current_tags %} &mdash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &mdash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &mdash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+
+  {% if settings.heading_font != blank %}
+    <style>
+      :root {
+        --font-display: {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }};
+      }
+    </style>
+    {{ settings.heading_font | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  {{ content_for_header }}
+</head>
+<body class="template-{{ template | replace: '.', '-' }}">
+  <a class="visually-hidden" href="#main">Skip to content</a>
+
+  {% sections 'header-group' %}
+
+  <main id="main" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer-group' %}
+
+  {% section 'cart-drawer' %}
+  {% section 'age-gate' %}
+
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<section class="collection-banner">
+  <h1>{% if search.performed %}Search results{% else %}Search{% endif %}</h1>
+  <form action="{{ routes.search_url }}" method="get" style="max-width:540px;margin:24px auto 0;">
+    <div style="display:flex;gap:8px;background:var(--bg-2);border:1px solid var(--fg-line);border-radius:999px;padding:6px 6px 6px 18px;">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search products, brands..." style="flex:1;background:none;border:0;color:var(--fg);outline:none;font-size:15px;" autofocus>
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </form>
+  {%- if search.performed -%}
+    <p style="margin-top:18px;color:var(--fg-dim);font-size:14px;">{{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for "<strong style="color:var(--fg)">{{ search.terms }}</strong>"</p>
+  {%- endif -%}
+</section>
+
+{%- if search.performed -%}
+  <section class="collection-products">
+    {%- if search.results.size > 0 -%}
+      {%- paginate search.results by 24 -%}
+        <div class="product-grid">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item %}
+            {%- elsif item.object_type == 'page' or item.object_type == 'article' -%}
+              <a class="product-card reveal" href="{{ item.url }}" style="padding:24px;">
+                <div class="product-card-vendor">{{ item.object_type }}</div>
+                <div class="product-card-title" style="font-size:18px;">{{ item.title }}</div>
+                <p style="font-size:13.5px;color:var(--fg-dim);margin-top:8px;line-height:1.5;">{{ item.content | default: item.excerpt | strip_html | truncate: 140 }}</p>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        {% render 'pagination', paginate: paginate %}
+      {%- endpaginate -%}
+    {%- else -%}
+      <div style="text-align:center;padding:64px 24px;color:var(--fg-dim);">
+        <p>No matches. Try fewer or different keywords.</p>
+      </div>
+    {%- endif -%}
+  </section>
+{%- endif -%}
+
+{% schema %}
+{ "name": "Search" }
+{% endschema %}

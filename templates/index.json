@@ -1,0 +1,77 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Now in stock",
+        "heading": "Premium glass.\nReal-deal pricing.",
+        "subheading": "Sovereignty, Puffco, marbles, pendants — curated drops every week.",
+        "cta_label": "Shop the drop",
+        "cta_url": "shopify://collections/all",
+        "cta2_label": "New arrivals",
+        "cta2_url": "shopify://collections/new"
+      }
+    },
+    "categories": {
+      "type": "collection-list",
+      "blocks": {
+        "b1": { "type": "tile", "settings": { "title": "Sovereignty" } },
+        "b2": { "type": "tile", "settings": { "title": "Puffco" } },
+        "b3": { "type": "tile", "settings": { "title": "Marbles & Caps" } },
+        "b4": { "type": "tile", "settings": { "title": "Quartz" } },
+        "b5": { "type": "tile", "settings": { "title": "Tubes & Slides" } },
+        "b6": { "type": "tile", "settings": { "title": "Pendants" } },
+        "b7": { "type": "tile", "settings": { "title": "Accessories" } },
+        "b8": { "type": "tile", "settings": { "title": "3 Grams" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"],
+      "settings": {
+        "label": "Shop categories",
+        "title": "Browse the floor.",
+        "subtitle": "From entry-level setups to high-end glass — every piece is hand-selected."
+      }
+    },
+    "featured-puffco": {
+      "type": "featured-collection",
+      "settings": {
+        "label": "Most-viewed",
+        "title": "Puffco · in stock",
+        "product_count": 8
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "label": "About",
+        "title": "Family-owned. Real selection.",
+        "body": "<p>We carry the brands actual collectors know — Sovereignty, Puffco, top-shelf marble artists, signature pendants — at honest pricing. Walk in, get a real recommendation, leave with the right piece. Or shop the entire floor online.</p>",
+        "cta_label": "Visit the shop",
+        "cta_url": "shopify://pages/contact"
+      }
+    },
+    "featured-marbles": {
+      "type": "featured-collection",
+      "settings": {
+        "label": "Collectors' shelf",
+        "title": "Marbles & caps",
+        "product_count": 8
+      }
+    },
+    "featured-product": {
+      "type": "featured-product",
+      "settings": {
+        "label": "Spotlight",
+        "title": "The piece of the week."
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "label": "Stay close",
+        "heading": "Inside the drop.",
+        "subheading": "Weekly drops, restocks, and member-only discounts — straight to your inbox."
+      }
+    }
+  },
+  "order": ["hero", "categories", "featured-puffco", "image-with-text", "featured-marbles", "featured-product", "newsletter"]
+}

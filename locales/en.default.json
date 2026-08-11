@@ -1,0 +1,88 @@
+{
+  "general": {
+    "search": {
+      "title": "Search",
+      "placeholder": "Search products, brands, drops...",
+      "no_results_html": "No results for <strong>\"{{ terms }}\"</strong>.",
+      "results_for_html": "Results for <strong>\"{{ terms }}\"</strong>"
+    },
+    "cart": {
+      "title": "Cart",
+      "empty": "Your cart is empty.",
+      "subtotal": "Subtotal",
+      "checkout": "Check out",
+      "view_cart": "View cart",
+      "shipping_note": "Shipping, taxes, and discounts calculated at checkout.",
+      "remove": "Remove",
+      "quantity": "Quantity",
+      "items_count": {
+        "one": "{{ count }} item",
+        "other": "{{ count }} items"
+      }
+    },
+    "newsletter": {
+      "title": "Inside the drop.",
+      "subtitle": "Weekly drops, restocks, and discounts — straight to your inbox.",
+      "placeholder": "you@email.com",
+      "submit": "Subscribe",
+      "success": "Welcome aboard. Check your inbox."
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtitle": "The page you were looking for doesn't exist.",
+      "cta": "Back to home"
+    },
+    "social": {
+      "follow_on": "Follow on {{ platform }}"
+    },
+    "age_gate": {
+      "title": "Are you 21 or older?",
+      "subtitle": "By entering this site you certify that you are of legal age in your jurisdiction to view tobacco accessories.",
+      "yes": "Yes, I'm 21+",
+      "no": "Take me back"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "added": "Added",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "vendor": "Vendor",
+      "sku": "SKU",
+      "share": "Share",
+      "low_stock": "Only {{ count }} left",
+      "from_price": "From {{ price }}"
+    }
+  },
+  "collections": {
+    "general": {
+      "sort_by": "Sort by",
+      "filter": "Filter",
+      "view_all": "View all",
+      "showing": "Showing {{ count }}"
+    },
+    "sorting": {
+      "manual": "Featured",
+      "best_selling": "Best selling",
+      "title_ascending": "A–Z",
+      "title_descending": "Z–A",
+      "price_ascending": "Price: low to high",
+      "price_descending": "Price: high to low",
+      "created_descending": "Newest"
+    }
+  },
+  "accessibility": {
+    "menu": "Menu",
+    "close": "Close",
+    "search": "Search",
+    "account": "Account",
+    "cart": "Cart",
+    "previous": "Previous",
+    "next": "Next"
+  }
+}

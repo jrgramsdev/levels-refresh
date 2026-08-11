@@ -1,0 +1,10 @@
+<section class="collection-banner">
+  <h1>{{ collection.title }}</h1>
+  {%- if collection.description != blank -%}
+    <p>{{ collection.description | strip_html | truncate: 240 }}</p>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{ "name": "Collection banner" }
+{% endschema %}

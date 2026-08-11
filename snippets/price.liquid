@@ -1,0 +1,32 @@
+{%- liquid
+  if product
+    assign target = product
+    if product.price_varies
+      assign show_range = true
+    endif
+  elsif variant
+    assign target = variant
+  endif
+
+  assign cur_price = target.price
+  assign cmp_price = target.compare_at_price
+  if variant
+    assign cur_price = variant.price
+    assign cmp_price = variant.compare_at_price
+  endif
+
+  if cmp_price > cur_price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="price-row">
+  {%- if show_range and product.price_min < product.price_max -%}
+    <span class="price price-range">{{ product.price_min | money }} – {{ product.price_max | money }}</span>
+  {%- elsif on_sale -%}
+    <span class="price price-sale">{{ cur_price | money }}</span>
+    <span class="price-compare">{{ cmp_price | money }}</span>
+  {%- else -%}
+    <span class="price">{{ cur_price | money }}</span>
+  {%- endif -%}
+</div>
