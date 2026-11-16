@@ -1,6 +1,6 @@
 # Levels Refresh — Shopify theme
 
-A custom Shopify Online Store 2.0 theme for **levelssmokeshop.com**. Apple-inspired dark UI with neon-orange accent, glass-pill nav, big rounded product cards, scroll-reveal animations, predictive search, cart drawer, and a 21+ age gate.
+A custom Shopify Online Store 2.0 theme for a specialty retail storefront. Apple-inspired dark UI with neon-orange accent, glass-pill nav, big rounded product cards, scroll-reveal animations, predictive search, cart drawer, and a 21+ age gate.
 
 ## What's in here
 
@@ -61,8 +61,8 @@ levels-refresh/
 
 ```bash
 brew install shopify-cli
-cd /Users/king50.ai/levels-refresh
-shopify theme dev --store=levelssmokeshop.myshopify.com   # live preview at localhost:9292
+cd levels-refresh
+shopify theme dev --store=your-store.myshopify.com   # live preview at localhost:9292
 shopify theme push --unpublished                          # uploads as a draft theme
 ```
 
@@ -71,18 +71,18 @@ shopify theme push --unpublished                          # uploads as a draft t
 Open **Customize** on the theme and walk through:
 
 ### Theme settings (gear icon, top-right)
-- **Brand → Logo** — upload the LEVELS logo (transparent PNG, ~260px wide)
+- **Brand → Logo** — upload the store logo (transparent PNG, ~260px wide)
 - **Brand → Favicon** — 32×32 PNG
 - **Brand → Default share image** — 1200×630 OG image
 - **Colors** — accent defaults to orange `#ff6a00`; change here if they want a different identity
 - **Typography → Heading font** — Shopify's font picker (Helvetica is the default; Inter, SF Pro, Söhne all work)
 - **Cart → Cart note** — "Free shipping over $50"
 - **Age gate** — toggle on/off (on by default)
-- **Social** — IG / FB / TikTok / YouTube URLs (already pre-filled with `instagram.com/levelssmoke`)
+- **Social** — IG / FB / TikTok / YouTube URLs (pre-filled with placeholder handles)
 
 ### Header (sections panel, left)
 - **Menu** — point at their existing `main-menu` (Sovereignty, Rigs, Marbles n Caps, Puffco, Quartz, Accessories, Tubes n Slides, Pendants, 3 Grams). Already wired by default.
-- **Announcement bar** — currently says "Free shipping on orders over $50 · Follow @LevelsSmoke for weekly drops". Edit to match the live promo.
+- **Announcement bar** — currently says a free-shipping promo line. Edit to match the live promo.
 
 ### Homepage sections (in order)
 1. **Hero** — set heading, sub, CTAs, and a 21:9 hero image (e.g., a flagship Sovereignty piece)
